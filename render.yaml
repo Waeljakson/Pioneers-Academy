@@ -1,9 +1,10 @@
 services:
   - type: web
     name: pioneers-academy
-    runtime: docker
+    runtime: image
     plan: free
-    dockerfilePath: ./Dockerfile
+    image:
+      url: ghcr.io/waeljakson/pioneers-academy:latest
     healthCheckPath: /
     envVars:
       - key: NODE_ENV
