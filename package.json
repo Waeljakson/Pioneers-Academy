@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "concurrently -k \"node --watch --env-file-if-exists=.env server/index.js\" \"vite --configLoader native --host 127.0.0.1\"",
-    "build": "vite build --configLoader native",
+    "build": "vite build --configLoader native && pnpm prune --prod",
     "start": "node --env-file-if-exists=.env server/index.js",
     "preview:demo": "node scripts/preview.js",
     "admin:reset-password": "node --env-file-if-exists=.env scripts/reset-password.js",
