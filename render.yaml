@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: pioneers-academy
+    runtime: node
+    plan: free
+    buildCommand: npm install --global pnpm@11.19.0 && pnpm install --frozen-lockfile --prod=false && pnpm build
+    startCommand: node scripts/deploy.js && node server/index.js
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_URL_DIRECT
+        sync: false
+      - key: SEED_ADMIN_EMAIL
+        sync: false
+      - key: SEED_ADMIN_PASSWORD
+        sync: false
