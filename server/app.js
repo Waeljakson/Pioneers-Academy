@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import express from "express";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
@@ -528,6 +529,9 @@ export function createApp(
   });
   app.use("/api", (_, res) =>
     res.status(404).json({ error: "المسار غير موجود" }),
+  );
+  app.get("/pioneers-logo.png", (_, res) =>
+    res.sendFile(fileURLToPath(new URL("../pioneers-logo.png", import.meta.url))),
   );
   if (staticDir) {
     app.use(express.static(staticDir));
