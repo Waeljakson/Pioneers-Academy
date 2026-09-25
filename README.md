@@ -155,3 +155,5 @@ pnpm-lock.yaml        قفل إصدارات الاعتماديات
 استعادة كلمة مرور بواسطة مشغّل موثوق: عيّن `RESET_EMAIL` و`RESET_PASSWORD` في بيئة خاصة ثم `pnpm admin:reset-password`، واحذفهما بعد التشغيل. الأداة تنهي جلسات الحساب وتسجل العملية ولا تطبع كلمة المرور.
 
 المصدر الرسمي لإعداد الاتصال: [Neon — Connection pooling](https://neon.com/docs/connect/connection-pooling) و[node-postgres — SSL](https://node-postgres.com/features/ssl).
+
+<!-- render-rebuild: 2026-09-25-3 -->
