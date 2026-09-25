@@ -19,7 +19,6 @@ import {
   ChevronLeft,
   Settings,
   X,
-  Trash2,
 } from "lucide-react";
 import "@fontsource/cairo/400.css";
 import "@fontsource/cairo/600.css";
@@ -605,7 +604,7 @@ function Entity({ entity, config }) {
                         )}
                         {!config.readonly && (
                           <button
-                            className="delete-button"
+                            className="text-button delete-button"
                             disabled={deleting === row.id}
                             onClick={async () => {
                               const name = displayName(row);
@@ -625,7 +624,6 @@ function Entity({ entity, config }) {
                               }
                             }}
                           >
-                            <Trash2 size={15} />
                             {deleting === row.id ? "جارٍ الحذف…" : "حذف"}
                           </button>
                         )}
