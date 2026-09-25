@@ -4,6 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#06162d" />
+    <script>
+      if (location.hostname === "waeljakson.github.io") {
+        const prefix = "/Pioneers-Academy";
+        const targetPath = location.pathname.startsWith(prefix)
+          ? location.pathname.slice(prefix.length) || "/"
+          : "/";
+        location.replace(
+          "https://pioneers-academy.onrender.com" +
+            targetPath +
+            location.search +
+            location.hash,
+        );
+      }
+    </script>
     <title>Pioneers Academy | أكاديمية الروّاد</title>
   </head>
   <body>
