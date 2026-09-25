@@ -394,6 +394,47 @@ export function createApp(
     });
     res.json({ ok: true });
   });
+  app.delete("/api/data/:entity/:id", async (req, res) => {
+    const key = req.params.entity,
+      c = catalog[key],
+      id = uuid(req.params.id);
+    if (!c || !allowed(req.user.role, key, true) || c.readonly)
+      fail(403, "الحذف غير متاح");
+    if (key === "users" && id === req.user.id)
+      fail(400, "لا يمكن حذف حسابك الحالي");
+
+    await db.transaction(async (tx) => {
+      const [old] = await query(
+        tx,
+        `SELECT * FROM ${key} WHERE id=$1 FOR UPDATE`,
+        [id],
+      );
+      if (!old) fail(404, "السجل غير موجود");
+
+      if (key === "questions") {
+        const [exam] = await query(
+          tx,
+          "SELECT published FROM exams WHERE id=$1",
+          [old.exam_id],
+        );
+        if (exam?.published)
+          fail(400, "لا يمكن حذف سؤال من اختبار منشور");
+      }
+
+      let accountUserId = null;
+      if (key === "students" || key === "lecturers")
+        accountUserId = old.user_id;
+
+      await query(tx, `DELETE FROM ${key} WHERE id=$1`, [id]);
+
+      if (accountUserId)
+        await query(tx, "DELETE FROM users WHERE id=$1", [accountUserId]);
+
+      await audit(tx, req.user, "delete", key, id);
+    });
+
+    res.json({ ok: true });
+  });
   async function studentFor(user) {
     if (user.role !== "student") fail(403, "هذه بوابة الطالب");
     const [s] = await query(db, "SELECT * FROM students WHERE user_id=$1", [
@@ -549,7 +590,11 @@ export function createApp(
       return res
         .status(409)
         .json({ error: "السجل موجود بالفعل، أو تم تسليم الاختبار سابقًا" });
-    if (["23503", "23514", "22P02"].includes(code))
+    if (code === "23503")
+      return res.status(409).json({
+        error: "لا يمكن حذف هذا السجل لوجود بيانات مرتبطة به. احذف البيانات التابعة له أولًا.",
+      });
+    if (["23514", "22P02"].includes(code))
       return res
         .status(400)
         .json({ error: "القيم أو الروابط بين السجلات غير صحيحة" });
