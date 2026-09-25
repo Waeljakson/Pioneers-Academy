@@ -19,6 +19,7 @@ import {
   ChevronLeft,
   Settings,
   X,
+  Trash2,
 } from "lucide-react";
 import "@fontsource/cairo/400.css";
 import "@fontsource/cairo/600.css";
@@ -457,6 +458,7 @@ function Entity({ entity, config }) {
     [search, setSearch] = useState(""),
     [editing, setEditing] = useState(null),
     [busy, setBusy] = useState(false),
+    [deleting, setDeleting] = useState(null),
     [formError, setFormError] = useState("");
   async function reload() {
     setLoading(true);
@@ -599,6 +601,32 @@ function Entity({ entity, config }) {
                             }}
                           >
                             تعديل
+                          </button>
+                        )}
+                        {!config.readonly && (
+                          <button
+                            className="delete-button"
+                            disabled={deleting === row.id}
+                            onClick={async () => {
+                              const name = displayName(row);
+                              if (!window.confirm(`حذف "${name}" نهائيًا؟ لا يمكن التراجع عن هذه العملية.`))
+                                return;
+                              setDeleting(row.id);
+                              setError("");
+                              try {
+                                await api(`/data/${entity}/${row.id}`, {
+                                  method: "DELETE",
+                                });
+                                await reload();
+                              } catch (x) {
+                                setError(x.message);
+                              } finally {
+                                setDeleting(null);
+                              }
+                            }}
+                          >
+                            <Trash2 size={15} />
+                            {deleting === row.id ? "جارٍ الحذف…" : "حذف"}
                           </button>
                         )}
                         {entity === "certificates" && (
