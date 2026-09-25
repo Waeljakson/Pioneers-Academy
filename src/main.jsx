@@ -64,13 +64,9 @@ const labelKeys = {
 };
 const Brand = () => (
   <div className="brand">
-    <span className="brand-icon">
-      <GraduationCap size={29} />
-    </span>
-    <div>
-      <b>
-        Pioneers <i>Academy</i>
-      </b>
+    <img src="./pioneers-logo.png" alt="Pioneers Academy" className="brand-logo" />
+    <div className="brand-copy">
+      <b>Pioneers <i>Academy</i></b>
       <small>A ROAD TO SUPPORT</small>
     </div>
   </div>
@@ -234,84 +230,56 @@ function Login({ onLogin, fatal }) {
   const [error, setError] = useState(fatal),
     [busy, setBusy] = useState(false);
   return (
-    <div className="login">
-      <section className="login-art">
-        <Brand />
-        <div className="orbit">
-          <GraduationCap size={96} />
+    <div className="login premium-login">
+      <section className="login-art premium-login-art">
+        <div className="login-art-glow" />
+        <img src="./pioneers-logo.png" alt="Pioneers Academy" className="login-main-logo" />
+        <div className="login-art-copy">
+          <span className="eyebrow">PIONEERS ACADEMY</span>
+          <h1>تعلّم اليوم.<br /><em>واصنع مستقبلك.</em></h1>
+          <p>منصة أكاديمية متكاملة تجمع رحلتك التعليمية والمهنية<br />في مكان واحد.</p>
         </div>
-        <div>
-          <span className="eyebrow">LEARN · GROW · SUCCEED</span>
-          <h1>
-            معرفة تُلهمك.
-            <br />
-            <em>ومستقبل تصنعه.</em>
-          </h1>
-          <p>
-            رحلتك المهنية تبدأ بخطوة.
-            <br />
-            تعلّم، تطوّر، واصنع أثرًا مع أكاديمية الروّاد.
-          </p>
+        <div className="login-programs">
+          <div><GraduationCap size={25} /><strong>دورات تدريبية</strong><small>تعلم وتطور</small></div>
+          <div><FileBadge size={25} /><strong>دبلومات مهنية</strong><small>لبناء مستقبلك</small></div>
+          <div><BookOpen size={25} /><strong>ماجستير مهني</strong><small>تخصص أكثر</small></div>
+          <div><ShieldCheck size={25} /><strong>دكتوراه مهنية</strong><small>للتميز المهني</small></div>
         </div>
-        <small>دورات تدريبية · دبلومات · برامج مهنية متقدمة</small>
       </section>
-      <section className="login-form">
-        <div className="login-box">
-          <span className="pill">PIONEERS ACADEMY</span>
-          <h2>أهلًا بك من جديد</h2>
-          <p className="muted">سجّل دخولك للوصول إلى مساحتك الأكاديمية.</p>
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-              setBusy(true);
-              setError("");
-              const f = new FormData(e.currentTarget);
-              try {
-                await api("/login", {
-                  method: "POST",
-                  body: { email: f.get("email"), password: f.get("password") },
-                });
-                await onLogin();
-              } catch (x) {
-                setError(x.message);
-              } finally {
-                setBusy(false);
-              }
-            }}
-          >
-            <label>
-              البريد الإلكتروني
-              <input
-                name="email"
-                type="email"
-                dir="ltr"
-                placeholder="you@example.com"
-                autoComplete="username"
-                required
-              />
+      <section className="login-form premium-login-form">
+        <div className="login-box premium-login-box">
+          <img src="./pioneers-logo.png" alt="Pioneers Academy" className="login-form-logo" />
+          <span className="login-welcome">PIONEERS ACADEMY</span>
+          <h2>مرحبًا بك في أكاديمية بايونير</h2>
+          <p className="muted">منصة متكاملة للدورات المهنية والدبلومات والماجستير والدكتوراه</p>
+          <form onSubmit={async (e) => {
+            e.preventDefault();
+            setBusy(true);
+            setError("");
+            const f = new FormData(e.currentTarget);
+            try {
+              await api("/login", { method: "POST", body: { email: f.get("email"), password: f.get("password") } });
+              await onLogin();
+            } catch (x) {
+              setError(x.message);
+            } finally {
+              setBusy(false);
+            }
+          }}>
+            <label>البريد الإلكتروني
+              <input name="email" type="email" dir="ltr" placeholder="you@example.com" autoComplete="username" required />
             </label>
-            <label>
-              كلمة المرور
-              <input
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-              />
+            <label>كلمة المرور
+              <input name="password" type="password" placeholder="أدخل كلمة المرور" autoComplete="current-password" required />
             </label>
             <ErrorText error={error} />
-            <button className="primary wide" disabled={busy}>
-              {busy ? "جارٍ تسجيل الدخول…" : "تسجيل الدخول"}
-              <ArrowUpLeft size={18} />
+            <button className="primary wide login-submit" disabled={busy}>
+              {busy ? "جارٍ تسجيل الدخول…" : "تسجيل الدخول"} <ArrowUpLeft size={18} />
             </button>
           </form>
           <div className="login-note">
-            <ShieldCheck size={20} />
-            <span>
-              حساب واحد، تجربة متكاملة.
-              <br />
-              للحصول على حساب أو استعادته تواصل مع إدارة الأكاديمية.
-            </span>
+            <ShieldCheck size={21} />
+            <span>حساب واحد للوصول إلى خدمات الأكاديمية.<br />للحصول على حساب أو استعادته تواصل مع إدارة الأكاديمية.</span>
           </div>
         </div>
       </section>
