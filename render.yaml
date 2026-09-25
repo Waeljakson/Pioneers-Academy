@@ -3,12 +3,12 @@ services:
     name: pioneers-academy
     runtime: node
     plan: free
-    buildCommand: npm install --global pnpm@11.19.0 && pnpm install --frozen-lockfile --prod=false && pnpm build
+    buildCommand: corepack enable && corepack prepare pnpm@11.19.0 --activate && pnpm install --frozen-lockfile --prod=false && pnpm build
     startCommand: node scripts/deploy.js && node server/index.js
     healthCheckPath: /
     envVars:
       - key: NODE_VERSION
-        value: "24"
+        value: "22"
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
