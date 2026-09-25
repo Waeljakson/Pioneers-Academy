@@ -25,6 +25,7 @@ import "@fontsource/cairo/600.css";
 import "@fontsource/cairo/700.css";
 import { api, money, date, datetime } from "./api";
 import "./styles.css";
+import pioneersLogo from "../pioneers-logo.png";
 const icons = {
   programs: BookOpen,
   students: Users,
@@ -64,7 +65,7 @@ const labelKeys = {
 };
 const Brand = () => (
   <div className="brand">
-    <img src="./pioneers-logo.png" alt="Pioneers Academy" className="brand-logo" />
+    <img src={pioneersLogo} alt="Pioneers Academy" className="brand-logo" />
     <div className="brand-copy">
       <b>Pioneers <i>Academy</i></b>
       <small>A ROAD TO SUPPORT</small>
@@ -233,7 +234,7 @@ function Login({ onLogin, fatal }) {
     <div className="login premium-login">
       <section className="login-art premium-login-art">
         <div className="login-art-glow" />
-        <img src="./pioneers-logo.png" alt="Pioneers Academy" className="login-main-logo" />
+        <img src={pioneersLogo} alt="Pioneers Academy" className="login-main-logo" />
         <div className="login-art-copy">
           <span className="eyebrow">PIONEERS ACADEMY</span>
           <h1>تعلّم اليوم.<br /><em>واصنع مستقبلك.</em></h1>
@@ -248,7 +249,7 @@ function Login({ onLogin, fatal }) {
       </section>
       <section className="login-form premium-login-form">
         <div className="login-box premium-login-box">
-          <img src="./pioneers-logo.png" alt="Pioneers Academy" className="login-form-logo" />
+          <img src={pioneersLogo} alt="Pioneers Academy" className="login-form-logo" />
           <span className="login-welcome">PIONEERS ACADEMY</span>
           <h2>مرحبًا بك في أكاديمية بايونير</h2>
           <p className="muted">منصة متكاملة للدورات المهنية والدبلومات والماجستير والدكتوراه</p>
